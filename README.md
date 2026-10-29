@@ -1,2 +1,2 @@
 ## Live Demo
-[https://](https://gamitko.page.gd)
+[published link](https://gamitko.page.gd)

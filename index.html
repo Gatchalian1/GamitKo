@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GamitKo - Login</title>
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<div class="auth-page">
+  <div class="auth-card">
+
+    <!-- school logo -->
+    <div class="auth-logo">
+      <img src="images/kiiik.jpg" alt="GRC logo">
+    </div>
+
+    <h1 class="auth-title">GRC: GamitKo</h1>
+    <p class="auth-sub">Report and Recover Lost Items</p>
+
+    <div class="tab-buttons">
+      <button type="button" id="showLogin" class="active">Login</button>
+      <button type="button" id="showRegister">Register</button>
+    </div>
+
+    <!-- login form -->
+    <form id="loginForm">
+      <div class="alert alert-error" id="loginError"></div>
+
+      <div class="form-group">
+        <label for="loginEmail">Email address</label>
+        <input type="email" id="loginEmail" placeholder="yourname@gmail.com">
+      </div>
+
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password">
+      </div>
+
+      <button type="submit" class="btn btn-main btn-block">Login</button>
+    </form>
+
+    <!-- register form -->
+    <form id="registerForm" class="hidden">
+      <div class="alert alert-error" id="registerError"></div>
+
+      <div class="form-group">
+        <label for="regName">Full name</label>
+        <input type="text" id="regName" placeholder="Juan Dela Cruz">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="regId">Student ID</label>
+          <input type="text" id="regId" placeholder="2024-00123">
+        </div>
+        <div class="form-group">
+          <label for="regCourse">Course / Section</label>
+          <input type="text" id="regCourse" placeholder="BSIT 201">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="regEmail">Email address</label>
+        <input type="email" id="regEmail" placeholder="yourname@gmail.com">
+      </div>
+
+      <div class="form-group">
+        <label for="regPassword">Password</label>
+        <input type="password" id="regPassword" placeholder="At least 5 characters">
+      </div>
+
+      <button type="submit" class="btn btn-main btn-block">Create account</button>
+    </form>
+
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+<script>startLoginPage();</script>
+</body>
+</html>

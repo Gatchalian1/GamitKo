@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GamitKo - Student Portal</title>
+  <link rel="stylesheet" href="css/student.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR (left side) ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="images/kiiik.jpg" alt="GRC logo">
+      <div class="brand-text">
+        GRC: GamitKo
+        <small>Student Portal</small>
+      </div>
+    </div>
+
+    <ul class="side-nav">
+      <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+      <li><a href="#" class="nav-link" data-page="report">Report an Item</a></li>
+      <li><a href="#" class="nav-link" data-page="found">Found Items</a></li>
+      <li><a href="#" class="nav-link" data-page="reports">My Reports</a></li>
+    </ul>
+
+    <div class="side-user">
+      <div class="avatar" id="userAvatar">ST</div>
+      <span class="user-name" id="userName">Student</span>
+      <button class="btn btn-outline btn-small" onclick="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="content">
+
+    <!-- ---------- DASHBOARD ---------- -->
+    <section id="page-dashboard">
+      <h2 class="page-title" id="welcomeTitle">Welcome!</h2>
+      <p class="page-sub">Here is a quick summary of your lost and found activity.</p>
+
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-number" id="statLost">0</div>
+          <div class="stat-label">Items I reported</div>
+        </div>
+        <div class="stat-box blue">
+          <div class="stat-number" id="statClaims">0</div>
+          <div class="stat-label">Claims I submitted</div>
+        </div>
+        <div class="stat-box orange">
+          <div class="stat-number" id="statPending">0</div>
+          <div class="stat-label">Claims still pending</div>
+        </div>
+        <div class="stat-box green">
+          <div class="stat-number" id="statRecovered">0</div>
+          <div class="stat-label">Items recovered</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h3>Latest Found Items</h3>
+          <p>Recently reported items found on system.</p>
+        </div>
+        <!-- JavaScript will insert item cards here -->
+        <div id="latestItems" class="item-grid">
+          <p>Loading found items...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- REPORT AN ITEM ---------- -->
+    <section id="page-report" class="hidden">
+      <h2 class="page-title">Report an item</h2>
+      <p class="page-sub">Tell us if you lost an item or if you found one.</p>
+
+      <div class="card" style="max-width:760px;">
+
+        <!-- choose the type of report -->
+        <div class="type-toggle">
+          <button type="button" class="type-option active" id="typeLost" onclick="setReportType('lost')">
+            <strong>I lost an item</strong>
+            <small>Report something that you lost in school.</small>
+          </button>
+          <button type="button" class="type-option" id="typeFound" onclick="setReportType('found')">
+            <strong>I found an item</strong>
+            <small>Turn in something that you found on School.</small>
+          </button>
+        </div>
+
+        <div class="alert alert-ok" id="reportOk"></div>
+        <div class="alert alert-error" id="reportError"></div>
+
+        <form id="itemReportForm">
+          <div class="form-group">
+            <label for="itemName">Item name *</label>
+            <input type="text" id="itemName" placeholder="Example: Black umbrella">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="itemCategory">Category *</label>
+              <select id="itemCategory">
+                <option value="">Select category</option>
+                <option>Electronics</option>
+                <option>ID and Cards</option>
+                <option>Clothing</option>
+                <option>Bags and Wallets</option>
+                <option>Keys</option>
+                <option>Accessories</option>
+                <option>Water Bottles</option>
+                <option>School Supplies</option>
+                <option>Others</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="itemLocation" id="locationLabel">Where did you lose it? *</label>
+              <select id="itemLocation">
+                <option value="">Select location</option>
+                <option>Library</option>
+                <option>Canteen</option>
+                <option>Restroom</option>
+                <option>PE room near canteen</option>
+                <option>Classroom</option>
+                <option>Hallway</option>
+                <option>Computer Laboratory</option>
+                <option>Others</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="itemDate" id="dateLabel">Date lost *</label>
+              <input type="date" id="itemDate">
+            </div>
+            <div class="form-group">
+              <label for="itemContact">Contact email or number *</label>
+              <input type="text" id="itemContact" placeholder="yourname@gmail.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="itemDescription">Description *</label>
+            <textarea id="itemDescription" placeholder="Describe the item. Include the color, brand and any marks so we can identify it."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="itemPhoto">Photo of the item (optional)</label>
+            <input type="file" id="itemPhoto" accept="image/*">
+            <img id="photoPreview" class="photo-preview hidden" alt="Item photo preview">
+            <button type="button" class="btn btn-outline btn-small mt-10 hidden" id="removePhoto" onclick="clearPhoto()">Remove photo</button>
+          </div>
+
+          <button type="submit" class="btn btn-main">Submit report</button>
+          <button type="button" class="btn btn-outline" onclick="clearReportForm()">Clear form</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ---------- FOUND ITEMS ---------- -->
+    <section id="page-found" class="hidden">
+      <h2 class="page-title">Items found in school</h2>
+      <p class="page-sub">These items were turned in to the OSA office. Click claim if one of them is yours.</p>
+
+      <div class="filter-bar">
+        <input type="search" id="searchFound" placeholder="Search by item name or location...">
+        <select id="filterCategory">
+          <option value="">All categories</option>
+          <option>Electronics</option>
+          <option>ID and Cards</option>
+          <option>Clothing</option>
+          <option>Bags and Wallets</option>
+          <option>Keys</option>
+          <option>Accessories</option>
+          <option>Water Bottles</option>
+          <option>School Supplies</option>
+          <option>Others</option>
+        </select>
+      </div>
+
+      <div class="item-grid" id="foundList"></div>
+      <div class="empty-box hidden" id="foundEmpty">
+        <div class="big">&#128533;</div>
+        <p>No items match your search.</p>
+      </div>
+    </section>
+
+    <!-- ---------- MY REPORTS ---------- -->
+    <section id="page-reports" class="hidden">
+      <h2 class="page-title">My reports and claims</h2>
+      <p class="page-sub">Track the status of the items you reported and the claims you sent.</p>
+
+      <div class="card mb-20">
+        <div class="section-head">
+          <h3>My item reports</h3>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="myReportsTable"></tbody>
+          </table>
+        </div>
+        <div class="empty-box hidden" id="myReportsEmpty">
+          <div class="big">&#128221;</div>
+          <p>You have not reported any item yet.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h3>My claim requests</h3>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Item claimed</th>
+                <th>Message</th>
+                <th>Date sent</th>
+                <th>Status</th>
+                <th>Office note</th>
+              </tr>
+            </thead>
+            <tbody id="myClaimsTable"></tbody>
+          </table>
+        </div>
+        <div class="empty-box hidden" id="myClaimsEmpty">
+          <div class="big">&#128230;</div>
+          <p>You have not submitted any claim yet.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ CLAIM MODAL ============ -->
+<div class="modal-bg hidden" id="claimModal">
+  <div class="modal-box">
+    <h3>Submit a claim</h3>
+    <p class="small mb-10" id="claimItemName"></p>
+
+    <div class="alert alert-error" id="claimError"></div>
+
+    <div class="form-group">
+      <label for="claimMessage">Why is this item yours? *</label>
+      <textarea id="claimMessage" placeholder="Describe details that only the owner would know (marks, contents, where you lost it)."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeClaimModal()">Cancel</button>
+      <button class="btn btn-main" onclick="submitClaim()">Submit claim</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+<script>startStudentPage();</script>
+</body>
+</html>
+

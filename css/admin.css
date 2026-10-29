@@ -1,0 +1,711 @@
+/* =====================================================
+   GRC GamitKo
+   Stylesheet for the admin portal (admin.html)
+   ===================================================== */
+
+/* ---- basic reset ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---- colors used all over the site ---- */
+:root {
+  --main: #c8102e;        /* school red */
+  --main-dark: #9c0c24;
+  --main-light: #fdeaed;
+  --text: #222222;
+  --gray: #777777;
+  --line: #e4e4e4;
+  --bg: #f4f5f7;
+  --white: #ffffff;
+  --green: #1e8e3e;
+  --green-light: #e6f4ea;
+  --orange: #e07b00;
+  --orange-light: #fff3e0;
+  --blue: #1663c7;
+  --blue-light: #e7f0fd;
+  --radius: 10px;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(rgba(179, 15, 29, 0.62), rgba(85, 0, 12, 0.78)),
+    url("../images/grc-building.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+a {
+  color: var(--main);
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  color: var(--text);
+}
+
+/* ---- layout helpers ---- */
+.hidden {
+  display: none !important;
+}
+
+.mt-10 { margin-top: 10px; }
+.mb-20 { margin-bottom: 20px; }
+
+/* =====================================================
+   APP LAYOUT (sidebar on the left + content on the right)
+   ===================================================== */
+.app {
+  display: flex;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.sidebar {
+  width: 232px;
+  min-width: 232px;
+  background: rgba(255, 255, 255, 0.96);
+  border-right: 1px solid var(--line);
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px 0;
+}
+
+.brand img {
+  height: 40px;
+  width: 40px;
+  transition: transform 0.3s;
+}
+
+.brand img:hover {
+  transform: rotate(-8deg) scale(1.05);
+}
+
+.brand-text {
+  font-size: 16.5px;
+  font-weight: bold;
+  color: var(--main);
+  line-height: 1.15;
+}
+
+.brand-text small {
+  display: block;
+  font-size: 11px;
+  font-weight: normal;
+  color: var(--gray);
+}
+
+.side-nav {
+  list-style: none;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.side-nav a {
+  display: block;
+  padding: 11px 13px;
+  border-radius: 8px;
+  color: #444;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.25s, color 0.25s, padding-left 0.25s;
+}
+
+.side-nav a:hover {
+  background: var(--main-light);
+  color: var(--main);
+  padding-left: 18px;
+}
+
+.side-nav a.active {
+  background: var(--main);
+  color: #fff;
+}
+
+.side-user {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.side-user .user-name {
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 50%;
+  background: var(--main);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 26px 26px 60px;
+  background: transparent;
+}
+
+.content .page-title,
+.content .page-sub {
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(60, 0, 8, 0.45);
+}
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+.btn {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-main {
+  background: var(--main);
+  color: #fff;
+}
+
+.btn-main:hover {
+  background: var(--main-dark);
+  box-shadow: 0 6px 14px rgba(200, 16, 46, 0.3);
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #444;
+}
+
+.btn-outline:hover {
+  border-color: var(--main);
+  color: var(--main);
+  background: #fff;
+}
+
+.btn-small {
+  padding: 6px 11px;
+  font-size: 12.5px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* =====================================================
+   UNIFIED RED GLASSMORPHISM CARDS & PANELS
+   ===================================================== */
+.card,
+.stat-box,
+.table-wrap {
+  background: rgba(255, 120, 145, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.40);
+  border-radius: 20px;
+  box-shadow: 0 14px 38px rgba(60, 0, 8, 0.42);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  padding: 20px;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+}
+
+.card:hover,
+.stat-box:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 105, 130, 0.42);
+  box-shadow: 0 20px 48px rgba(60, 0, 8, 0.52);
+}
+
+/* Ensure all text headers & labels inside panels pop cleanly on glass */
+.card h3,
+.card .section-head h3,
+.card p,
+.card label,
+.stat-box .stat-label {
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(60, 0, 8, 0.40);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.stat-box .stat-number {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(60, 0, 8, 0.5);
+}
+
+.page-title {
+  margin-bottom: 4px;
+  font-size: 23px;
+}
+
+.page-sub {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+/* =====================================================
+   FORMS & INPUT FIELDS
+   ===================================================== */
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(60, 0, 8, 0.40);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="search"],
+input[type="file"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.90);
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+
+input[type="file"] {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #e0233c;
+  box-shadow: 0 0 0 4px rgba(224, 35, 60, 0.22);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 180px;
+}
+
+.photo-preview {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+/* =====================================================
+   TABLES INSIDE GLASS PANELS
+   ===================================================== */
+.table-wrap {
+  overflow-x: auto;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+}
+
+table th {
+  text-align: left;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  color: var(--gray);
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--line);
+  background: #fafafa;
+}
+
+table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+  vertical-align: middle;
+  color: var(--text);
+}
+
+table tr {
+  transition: background 0.2s;
+}
+
+tbody tr:hover {
+  background: #fdf6f7;
+}
+
+.thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  margin-right: 8px;
+  vertical-align: middle;
+  transition: transform 0.25s;
+}
+
+.thumb:hover {
+  transform: scale(1.5);
+}
+
+/* =====================================================
+   BADGES & ALERTS
+   ===================================================== */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #eee;
+  color: #555;
+}
+
+.badge-open { background: var(--blue-light); color: var(--blue); }
+.badge-matched { background: var(--orange-light); color: var(--orange); }
+.badge-returned { background: var(--green-light); color: var(--green); }
+.badge-pending { background: var(--orange-light); color: var(--orange); }
+.badge-approved { background: var(--green-light); color: var(--green); }
+.badge-rejected { background: var(--main-light); color: var(--main); }
+.badge-lost { background: var(--main-light); color: var(--main); }
+.badge-found { background: var(--blue-light); color: var(--blue); }
+.badge-active { background: var(--green-light); color: var(--green); }
+.badge-inactive { background: #eee; color: #777; }
+
+.alert {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 14px;
+  display: none;
+}
+
+.alert.show {
+  display: block;
+}
+
+.alert-error {
+  background: rgba(255, 240, 243, 0.95);
+  color: var(--main);
+  border: 1px solid #f4c2ca;
+}
+
+.alert-ok {
+  background: rgba(230, 244, 234, 0.95);
+  color: var(--green);
+  border: 1px solid #b9e2c6;
+}
+
+.empty-box {
+  text-align: center;
+  color: var(--gray);
+  padding: 34px 10px;
+  background: #fff;
+  border-radius: 12px;
+}
+
+.empty-box .big {
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+/* =====================================================
+   MODAL WINDOW (Edit Student & Overlays)
+   ===================================================== */
+.modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.modal-box {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 460px;
+  padding: 24px;
+  animation: popIn 0.25s ease;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-box h3 {
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* =====================================================
+   LIGHT ROSE GLASSMORPHISM MODAL
+   ===================================================== */
+
+.modal-bg {
+  background: rgba(64, 0, 16, 0.42);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  padding: 20px;
+}
+
+.modal-box {
+  width: min(100%, 520px);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 26px;
+  color: #fff;
+
+  /* Darker red glass for better readability */
+  background: linear-gradient(
+    135deg,
+    rgba(190, 65, 95, 0.88),
+    rgba(145, 30, 60, 0.85)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 16px;
+  box-shadow:
+    0 18px 48px rgba(58, 0, 15, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+}
+
+.modal-box h3 {
+  margin: 0 0 6px;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(70, 0, 15, 0.25);
+}
+
+.modal-box p {
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+}
+
+/* Modal form fields */
+.modal-box label {
+  display: block;
+  margin: 12px 0 5px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(70, 0, 15, 0.2);
+}
+
+.modal-box input[type="text"],
+.modal-box input[type="email"],
+.modal-box input[type="password"],
+.modal-box input[type="date"],
+.modal-box select,
+.modal-box textarea {
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 11px;
+  color: #343034;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 9px;
+  font: inherit;
+  font-size: 14px;
+}
+
+.modal-box input::placeholder,
+.modal-box textarea::placeholder {
+  color: #777078;
+}
+
+.modal-box input:focus,
+.modal-box select:focus,
+.modal-box textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.96);
+  border-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.22);
+}
+
+.modal-box select option {
+  color: #343034;
+  background: #fff;
+}
+
+/* Modal buttons */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.modal-actions .btn {
+  min-height: 38px;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.modal-actions .btn-main {
+  color: #fff;
+  background: #c8102e;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.modal-actions .btn-main:hover {
+  background: #a90d27;
+}
+
+.modal-actions .btn-outline {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.48);
+}
+
+.modal-actions .btn-outline:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+@media (max-width: 480px) {
+  .modal-bg {
+    padding: 14px;
+  }
+
+  .modal-box {
+    padding: 21px;
+    border-radius: 14px;
+  }
+}
+
+/* Center the Add a Found Item card */
+#page-found > .card.mb-20 {
+    max-width: 760px;
+    width: 100%;
+    margin: 0 auto 20px auto;
+    box-sizing: border-box;
+}
+
+/* Keep the form fields properly sized */
+#page-found > .card.mb-20 input,
+#page-found > .card.mb-20 select,
+#page-found > .card.mb-20 textarea {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+    #page-found > .card.mb-20 {
+        width: 100%;
+        padding: 20px;
+    }
+}

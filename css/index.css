@@ -1,0 +1,298 @@
+/* ==========================================================
+   GRC GamitKo
+   Stylesheet for the login / register page (index.html)
+   ========================================================== */
+
+/* ---- basic reset ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---- theme colors ---- */
+:root {
+  --red: #e0233c;
+  --red-dark: #a80b22;
+  --text-dark: #46262f;
+  --white: #ffffff;
+  --card-radius: 20px;
+}
+
+/* ---- page background ---- */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 16px;
+
+  /* red overlay on top of the School photo */
+  background-image:
+    linear-gradient(rgba(200, 25, 40, 0.62), rgba(85, 0, 12, 0.78)),
+    url("../images/grc-building.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ---- the glass card ---- */
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  padding: 34px 32px 36px;
+  background: rgba(255, 120, 145, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.40);
+  border-radius: var(--card-radius);
+  box-shadow: 0 14px 38px rgba(60, 0, 8, 0.42);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: card-in 0.7s ease backwards;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+}
+
+/* the card lifts up a little */
+.auth-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 105, 130, 0.42);
+  box-shadow: 0 24px 54px rgba(60, 0, 8, 0.55);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- logo, title and subtitle ---- */
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.auth-logo img {
+  width: 78px;
+  height: 78px;
+  object-fit: contain;
+  padding: 6px;
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 6px 16px rgba(60, 0, 8, 0.35);
+  transition: transform 0.3s ease;
+}
+
+.auth-logo img:hover {
+  transform: scale(1.10) rotate(-5deg);
+}
+
+.auth-title {
+  text-align: center;
+  font-size: 26px;
+  color: var(--white);
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 6px rgba(60, 0, 8, 0.45);
+}
+
+.auth-sub {
+  text-align: center;
+  margin-bottom: 22px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 2px 6px rgba(60, 0, 8, 0.45);
+}
+
+/* ---- login / register tabs ---- */
+.tab-buttons {
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  margin-bottom: 22px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+.tab-buttons button {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+.tab-buttons button:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateY(-2px);
+}
+
+.tab-buttons button.active {
+  color: var(--white);
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  box-shadow: 0 6px 14px rgba(120, 0, 15, 0.45);
+}
+
+.tab-buttons button.active:hover {
+  transform: none;
+}
+
+/* ---- form fields ---- */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--white);
+  text-shadow: 0 1px 4px rgba(60, 0, 8, 0.40);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14.5px;
+  color: var(--text-dark);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  outline: none;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-group input::placeholder {
+  color: #a98f97;
+}
+
+.form-group input:hover {
+  background: var(--white);
+}
+
+.form-group input:focus {
+  background: var(--white);
+  border-color: var(--red);
+  box-shadow: 0 0 0 4px rgba(224, 35, 60, 0.22);
+}
+
+/* student id and course side by side */
+.form-row {
+  display: flex;
+  gap: 14px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+/* ---- buttons ---- */
+.btn {
+  padding: 13px 18px;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.btn-main {
+  color: var(--white);
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  box-shadow: 0 10px 20px rgba(120, 0, 15, 0.35);
+}
+
+.btn-main:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #ff3a54, #8c0a1c);
+  box-shadow: 0 16px 28px rgba(120, 0, 15, 0.50);
+}
+
+.btn-main:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(120, 0, 15, 0.40);
+}
+
+/* ---- error message box ---- */
+.alert {
+  display: none;
+  padding: 11px 14px;
+  margin-bottom: 16px;
+  font-size: 13.5px;
+  border-radius: 10px;
+}
+
+.alert-error {
+  color: #8e1030;
+  background: rgba(255, 240, 243, 0.95);
+  border: 1px solid rgba(168, 11, 34, 0.35);
+}
+
+/* JavaScript adds .show to make it visible */
+.alert.show {
+  display: block;
+}
+
+/* ---- helpers ---- */
+.hidden {
+  display: none !important;
+}
+
+/* clear outline for keyboard users */
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(255, 180, 190, 0.85);
+  outline-offset: 2px;
+}
+
+/* ---- phones ---- */
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 28px 14px;
+    background-attachment: scroll;
+  }
+
+  .auth-card {
+    padding: 26px 20px 28px;
+    border-radius: 18px;
+  }
+
+  .auth-title {
+    font-size: 22px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GamitKo - Admin Portal</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR (left side) ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="images/kiiik.jpg" alt="GRC logo">
+      <div class="brand-text">
+        GRC: GamitKo
+        <small>Admin Portal</small>
+      </div>
+    </div>
+
+    <ul class="side-nav">
+      <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+      <li><a href="#" class="nav-link" data-page="found">Found Items</a></li>
+      <li><a href="#" class="nav-link" data-page="lost">Lost Reports</a></li>
+      <li><a href="#" class="nav-link" data-page="claims">Claims</a></li>
+      <li><a href="#" class="nav-link" data-page="students">Students</a></li>
+    </ul>
+
+    <div class="side-user">
+      <div class="avatar" id="adminAvatar">AD</div>
+      <span class="user-name" id="adminName">Admin</span>
+      <button class="btn btn-outline btn-small" onclick="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="content">
+
+    <!-- ---------- DASHBOARD ---------- -->
+    <section id="page-dashboard">
+      <h2 class="page-title" id="adminWelcome">Welcome, Admin!</h2>
+      <p class="page-sub">Overview of all lost and found activity in the school.</p>
+
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-number" id="statLostItems">0</div>
+          <div class="stat-label">Lost item reports</div>
+        </div>
+        <div class="stat-box blue">
+          <div class="stat-number" id="statFoundItems">0</div>
+          <div class="stat-label">Items turned in</div>
+        </div>
+        <div class="stat-box orange">
+          <div class="stat-number" id="statPendingClaims">0</div>
+          <div class="stat-label">Pending claims</div>
+        </div>
+        <div class="stat-box green">
+          <div class="stat-number" id="statReturnedItems">0</div>
+          <div class="stat-label">Items already returned</div>
+        </div>
+      </div>
+
+      <div class="card card-glass">
+        <div class="section-head">
+          <h3>Claims waiting for approval</h3>
+          <button class="btn btn-outline btn-small" onclick="goToPage('claims')">Go to claims</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Student</th>
+                <th>Date sent</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="dashboardClaims"></tbody>
+          </table>
+        </div>
+        <div class="empty-box hidden" id="dashboardClaimsEmpty">
+          <div class="big">&#9989;</div>
+          <p>No pending claims right now. Good job!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- FOUND ITEMS ---------- -->
+    <section id="page-found" class="hidden">
+      <h2 class="page-title">Found items inventory</h2>
+      <p class="page-sub">Items that were turned in to the OSA office. Add new items and update their status.</p>
+
+      <div class="card mb-20">
+        <div class="section-head">
+          <h3>Add a found item</h3>
+        </div>
+
+        <div class="alert alert-ok" id="addItemOk"></div>
+        <div class="alert alert-error" id="addItemError"></div>
+
+        <form id="foundForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fName">Item name *</label>
+              <input type="text" id="fName" placeholder="Example: Blue tumbler">
+            </div>
+            <div class="form-group">
+              <label for="fCategory">Category *</label>
+              <select id="fCategory">
+                <option value="">Select category</option>
+                <option>Electronics</option>
+                <option>ID and Cards</option>
+                <option>Clothing</option>
+                <option>Bags and Wallets</option>
+                <option>Keys</option>
+                <option>Accessories</option>
+                <option>Water Bottles</option>
+                <option>School Supplies</option>
+                <option>Others</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fLocation">Found at *</label>
+              <select id="fLocation">
+                <option value="">Select location</option>
+                <option>Library</option>
+                <option>Canteen</option>
+                <option>Restroom</option>
+                <option>PE room near canteen</option>
+                <option>Classroom</option>
+                <option>Hallway</option>
+                <option>Computer Laboratory</option>
+                <option>Others</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="fDate">Date found *</label>
+              <input type="date" id="fDate">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fDescription">Description *</label>
+            <textarea id="fDescription" placeholder="Describe the item and where it is being kept."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="itemPhoto">Photo of the item (optional)</label>
+            <input type="file" id="itemPhoto" accept="image/*">
+            <img id="photoPreview" class="photo-preview hidden" alt="Item photo preview">
+            <button type="button" class="btn btn-outline btn-small mt-10 hidden" id="removePhoto" onclick="clearPhoto()">Remove photo</button>
+          </div>
+
+          <button type="submit" class="btn btn-main">Save item</button>
+          <button type="reset" class="btn btn-outline">Clear</button>
+        </form>
+      </div>
+
+      <div class="card card-glass">
+        <div class="section-head">
+          <h3>All found items</h3>
+          <input type="search" id="searchAdminFound" placeholder="Search items..." style="max-width:220px;">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Found at</th>
+                <th>Date found</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="foundTable"></tbody>
+          </table>
+        </div>
+        <div class="empty-box hidden" id="foundTableEmpty">
+          <div class="big">&#128230;</div>
+          <p>No found items have been added yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- LOST REPORTS ---------- -->
+    <section id="page-lost" class="hidden">
+      <h2 class="page-title">Lost item reports</h2>
+      <p class="page-sub">Reports submitted by students. Mark a report as matched when a found item fits it.</p>
+
+      <div class="card card-glass">
+        <div class="section-head">
+          <h3>All reports</h3>
+          <input type="search" id="searchAdminLost" placeholder="Search reports..." style="max-width:220px;">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Reported by</th>
+                <th>Contact</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="lostTable"></tbody>
+          </table>
+        </div>
+        <div class="empty-box hidden" id="lostTableEmpty">
+          <div class="big">&#128269;</div>
+          <p>No lost item reports yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- CLAIMS ---------- -->
+    <section id="page-claims" class="hidden">
+      <h2 class="page-title">Claim requests</h2>
+      <p class="page-sub">Approve a claim if the proof of ownership is correct. The student gets a note from the OSA office.</p>
+
+      <div class="card card-glass">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Student</th>
+                <th>Message</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Decision</th>
+              </tr>
+            </thead>
+            <tbody id="claimsTable"></tbody>
+          </table>
+        </div>
+        <div class="empty-box hidden" id="claimsTableEmpty">
+          <div class="big">&#128203;</div>
+          <p>No claim requests yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STUDENTS ---------- -->
+    <section id="page-students" class="hidden">
+      <h2 class="page-title">Student accounts</h2>
+
+      <div class="card card-glass">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Student ID</th>
+                <th>Course</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentsTable"></tbody>
+          </table>
+        </div>
+        <div class="empty-box hidden" id="studentsTableEmpty">
+          <div class="big">&#128101;</div>
+          <p>No student accounts yet.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ EDIT STUDENT MODAL ============ -->
+<div class="modal-bg hidden" id="editStudentModal">
+  <div class="modal-box">
+    <h3>Edit student account</h3>
+    <p class="small mb-10">Update student information below.</p>
+
+    <div class="alert alert-error" id="editStudentError"></div>
+
+    <input type="hidden" id="editUserId">
+
+    <div class="form-group">
+      <label for="editName">Full name *</label>
+      <input type="text" id="editName">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="editStudentId">Student ID *</label>
+        <input type="text" id="editStudentId">
+      </div>
+      <div class="form-group">
+        <label for="editCourse">Course / Section *</label>
+        <input type="text" id="editCourse">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="editEmail">Email address *</label>
+      <input type="email" id="editEmail">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeEditStudentModal()">Cancel</button>
+      <button class="btn btn-main" onclick="saveStudentEdits()">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+<script>startAdminPage();</script>
+</body>
+</html>
